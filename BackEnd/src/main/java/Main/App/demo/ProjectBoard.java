@@ -1,5 +1,6 @@
-package BackEnd.src.main.java;
+package com.example.demo;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class ProjectBoard {
@@ -8,7 +9,7 @@ public class ProjectBoard {
     private final HashSet<String> Administrators = new HashSet<String>();
 
     private String Description;
-    private HashMap<String,ProjectEvent> events = new HashMap<String, ProjectEvent>();
+    private Map<String, ProjectEvent> events = new HashMap<>();
 
 
     /**
@@ -92,6 +93,6 @@ public class ProjectBoard {
      * @return true if an admin, false otherwise.
      */
     private boolean canChangeProjectData(String username){
-        return Objects.equals(username, getProjectName());
+        return Administrators.contains(username);
     }
 }

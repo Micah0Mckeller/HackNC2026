@@ -1,4 +1,4 @@
-package BackEnd.src.main.java.com.example.demo;
+package com.example.demo;
 
 import java.sql.Time;
 import java.time.ZonedDateTime;

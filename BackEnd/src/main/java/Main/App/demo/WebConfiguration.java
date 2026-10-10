@@ -1,4 +1,4 @@
-package BackEnd.src.main.java.Main.App.demo;
+package com.example.demo;
 
 import java.util.List;
 
