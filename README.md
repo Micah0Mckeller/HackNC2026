@@ -1,5 +1,5 @@
-# HackNC2026
-add description of application here
+# **HackNC2026 Project!**
+## Contributors: Micah Mckeller, Eli Kittinger, Aditya Meher, Matias Ripa
 
 ## Greenhouse:
 
