@@ -13,10 +13,11 @@ public class logic {
     public ProjectBoard getTestProject() {
         return Test;
     }
-    @GetMapping("api/mix")
-    public String display() {
-        return "Project Name: " + Test.getProjectName();
-    }
+   @GetMapping("/api/mix")
+    public ProjectBoard getProject() {
+    return Test;
+}
+
     
 }
 
