@@ -1,47 +1,117 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+const API_URL = 'http://localhost:8080/api/project'
+
 function App() {
-  const [message, setMessage] = useState('')
+  const [form, setForm] = useState({
+    projectName: '',
+    timeTillCompletion: '',
+    description: ''
+  })
+
+  const [project, setProject] = useState(null)
+  const [status, setStatus] = useState('')
+
+  const loadProject = async () => {
+    try {
+      const response = await fetch(API_URL)
+      if (!response.ok) {
+        throw new Error(`Project request failed with status ${response.status}`)
+      }
+
+      const data = await response.json()
+      setProject(data)
+      setStatus('Project loaded from Java')
+    } catch (error) {
+      setStatus('Could not load project from Java')
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
-  fetch("http://localhost:8080/api/mix")
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setProject(data);
-    });
-}, []);
+    loadProject()
+  }, [])
 
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...form,
+          timeTillCompletion: Number(form.timeTillCompletion)
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error(`Project submission failed with status ${response.status}`)
+      }
+
+      const data = await response.json()
+      setProject(data)
+      setStatus('Project sent to Java and stored as an object')
+    } catch (error) {
+      setStatus('Failed to send project to Java')
+      console.error(error)
+    }
+  }
 
   return (
-    <>
-      <section id="section-header" className="header-section">
-        <div className="clouds-wrapper">
-          {/* merged image */}
-          <div className="clouds-header">
-            <img
-              src={`${'./assets/header/clouds'}/7_107.svg`}
-              alt="Cloud Header"
-              className="header-img"
-            />
-          </div>
-        </div>
-        <div className="header-content">
-          <h1>GreenHouse</h1>
-        </div>
-      </section>
+    <div className="app-shell">
+      <form onSubmit={handleSubmit} className="project-form">
+        <h2>Create Project</h2>
 
-      <section id="section-hero" className="hero-section">
-        <div className="grey-box"></div>
-      </section>
+        <input
+          name="projectName"
+          value={form.projectName}
+          onChange={handleChange}
+          placeholder="Project name"
+        />
 
-      <section id="section-footer" className="footer-section">
-        <div className="footer">
-          <img src={`${'./assets/Footer'}/4_4.svg`} alt="Footer" className="footer-img" />
-        </div>
-      </section>
-    </>
+        <input
+          type="number"
+          name="timeTillCompletion"
+          value={form.timeTillCompletion}
+          onChange={handleChange}
+          placeholder="Time till completion"
+          step="any"
+          required
+        />
+
+        <textarea
+          name="description"
+          value={form.description}
+          onChange={handleChange}
+          placeholder="Description"
+        />
+
+        <button type="submit">Send to Java</button>
+      </form>
+
+      <div className="project-display">
+        <h3>Java Project Data</h3>
+        {status && <p>{status}</p>}
+        {project ? (
+          <ul>
+            <li><strong>Project Name:</strong> {project.projectName}</li>
+            <li><strong>Time till completion:</strong> {project.timeTillCompletion}</li>
+            <li><strong>Description:</strong> {project.description}</li>
+          </ul>
+        ) : (
+          <p>No project loaded yet.</p>
+        )}
+      </div>
+    </div>
   )
 }
 

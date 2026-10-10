@@ -1,4 +1,4 @@
-package com.example.demo;
+package Main;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -6,9 +6,10 @@ import java.util.*;
 public class ProjectBoard {
     private final String projectName;
     private final UUID projectUUID;
+    private final double timeTillCompletion;
     private final HashSet<String> Administrators = new HashSet<String>();
 
-    private String Description;
+    private String description;
     private Map<String, ProjectEvent> events = new HashMap<>();
 
 
@@ -16,13 +17,13 @@ public class ProjectBoard {
      * initializes board class data
      * @param projectName the name of the board
      */
-    public ProjectBoard(String projectName, String administrator, String description)
+    public ProjectBoard(String projectName, double timeTillCompletion, String description)
     {
         this.projectUUID = UUID.randomUUID(); // creates a new uuid and adds it to the class.
         this.projectName = projectName;
+        this.timeTillCompletion = timeTillCompletion;
 
-        this.Description = description;
-        this.Administrators.add(administrator);
+        this.description = description;
     }
 
     /**
@@ -41,6 +42,13 @@ public class ProjectBoard {
         return projectUUID;
     }
 
+    public double getTimeTillCompletion() {
+        return timeTillCompletion;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * adds an administrator to the board
@@ -69,7 +77,7 @@ public class ProjectBoard {
 
     public void setProjectDescription(String newDescription)
     {
-        Description  = newDescription;
+        description = newDescription;
     }
 
     /**
