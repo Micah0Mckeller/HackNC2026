@@ -19,21 +19,16 @@ function App() {
       <section id="section-header" className="header-section">
         <div className="clouds-wrapper">
           {/* merged image */}
-          <div className="merged-clouds">
+          <div className="clouds-header">
             <img
-              src={`${ASSET_PATH}/7_107.svg`}
-              alt="Cloud Background"
-              className="cloud-img"
-            />
-            <img
-              src={`${ASSET_PATH}/7_115.svg`}
-              alt="Cloud Foreground"
-              className="cloud-img"
+              src={`${'./assets/header/clouds'}/7_107.svg`}
+              alt="Cloud Header"
+              className="header-img"
             />
           </div>
         </div>
         <div className="header-content">
-          <h1>Bloom Box</h1>
+          <h1>GreenHouse</h1>
         </div>
       </section>
 
@@ -42,42 +37,8 @@ function App() {
       </section>
 
       <section id="section-footer" className="footer-section">
-        <div className="bubbles-right">
-          {/* merged image */}
-          <div className="merged-bubbles">
-            <img src={`${ASSET_PATH}/6_15.svg`} alt="Bubble" className="bubble b-right-1" />
-            <img src={`${ASSET_PATH}/6_21.svg`} alt="Bubble" className="bubble b-right-2" />
-            <img src={`${ASSET_PATH}/6_27.svg`} alt="Bubble" className="bubble b-right-3" />
-          </div>
-        </div>
-        
-        <div className="bubbles-left">
-          {/* merged image */}
-          <div className="merged-bubbles">
-            <img src={`${ASSET_PATH}/6_87.svg`} alt="Bubble" className="bubble b-left-1" />
-            <img src={`${ASSET_PATH}/6_93.svg`} alt="Bubble" className="bubble b-left-2" />
-            <img src={`${ASSET_PATH}/6_99.svg`} alt="Bubble" className="bubble b-left-3" />
-          </div>
-        </div>
-        
-        <div className="ice-container">
-          <img src={`${ASSET_PATH}/4_4.svg`} alt="Ice Background" className="ice-img" />
-        </div>
-        
-        <div className="grass-container">
-          {/* merged image */}
-          <div className="merged-grass">
-            <img
-              src={`${ASSET_PATH}/8_130.svg`}
-              alt="Grass Foreground"
-              className="grass-img"
-            />
-            <img
-              src={`${ASSET_PATH}/8_136.svg`}
-              alt="Grass Background"
-              className="grass-img"
-            />
-          </div>
+        <div className="footer">
+          <img src={`${'./assets/Footer'}/4_4.svg`} alt="Footer" className="footer-img" />
         </div>
       </section>
     </>
