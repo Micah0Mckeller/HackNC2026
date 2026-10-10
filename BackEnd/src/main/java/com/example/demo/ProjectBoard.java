@@ -8,10 +8,10 @@ import java.util.*;
 public class ProjectBoard {
     private final String projectName;
     private final UUID projectUUID;
-    private HashSet<String> Administrators = new HashSet<String>();
+    private final HashSet<String> Administrators = new HashSet<String>();
 
     private String Description;
-    private HashMap<String,ProjectEvent> events;
+    private HashMap<String,ProjectEvent> events = new HashMap<String, ProjectEvent>();
 
 
     /**
@@ -67,6 +67,11 @@ public class ProjectBoard {
     public HashSet<String> getAdministrators()
     {
         return Administrators;
+    }
+
+    public void setProjectDescription(String newDescription)
+    {
+        Description  = newDescription;
     }
 
     /**
