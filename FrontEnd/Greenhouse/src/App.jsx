@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import perfectHue from './assets/perfect_hue_40.jpg'
-import footer from './assets/Footer/Footer.svg'
+
 
 const PROJECTS_API_URL = 'http://localhost:8080/api/projects'
 
@@ -173,7 +173,7 @@ function App() {
             <p>
               <strong>Scheduled time:</strong>{' '}
               {selectedProject.scheduledTime
-                ? new Date(selectedProject.scheduledTime).toLocaleString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+                ? new Date(selectedProject.scheduledTime).toLocaleString([], { hour: '2-digit', minute: '2-digit', hour12: true })
                 : 'Not set'}
             </p>
             <p><strong>RSVPs:</strong> {selectedProject.RSVPs ?? 0}</p>
