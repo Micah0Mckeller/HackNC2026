@@ -1,3 +1,47 @@
+.topBar {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  width: min(100%, 1126px);
+  min-height: 76px;
+  padding: 0 32px;
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.08) 48%,
+    rgba(255, 255, 255, 0.2)
+  );
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+  backdrop-filter: blur(18px) saturate(155%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
+}
+
+.topBar__brand {
+  margin: 0;
+  color: #fff;
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 600px) {
+  .topBar {
+    min-height: 64px;
+    padding: 0 20px;
+  }
+
+  .topBar__brand {
+    font-size: 21px;
+  }
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
