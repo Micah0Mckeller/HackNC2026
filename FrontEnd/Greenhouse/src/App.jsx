@@ -153,7 +153,7 @@ function App() {
                     aria-pressed={selectedProject?.projectUUID === project.projectUUID}
                   >
                     <h2 className="project-card__name">{project.projectName}</h2>
-                    <p className="project-card__id">ID: {project.projectUUID}</p>
+                    <p className="project-card__location">{project.location}</p>
                   </button>
                 </li>
               ))
