@@ -1,8 +1,10 @@
 package Main;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -22,5 +24,12 @@ public class logic {
     @PostMapping("/projects")
     public ProjectBoard createProject(@RequestBody ProjectRequest request) {
         return projectService.create(request);
+    }
+
+    @PostMapping("/projects/{projectId}/rsvp")
+    public ResponseEntity<ProjectBoard> rsvp(@PathVariable UUID projectId) {
+        return projectService.rsvp(projectId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

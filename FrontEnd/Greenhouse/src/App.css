@@ -91,10 +91,31 @@
 .project-list {
   display: grid;
   gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
   margin: 0 0 24px;
-  padding: 0;
+  padding: 0 6px 0 0;
   list-style: none;
   text-align: left;
+  scrollbar-color: rgba(255, 255, 255, 0.75) rgba(0, 0, 0, 0.2);
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+}
+
+.project-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.project-list::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.project-list::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  background-clip: padding-box;
 }
 
 .project-card,
@@ -166,6 +187,37 @@
 
 .project-details p {
   line-height: 1.5;
+}
+
+.project-details__rsvp {
+  justify-self: start;
+  margin-top: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #173b2a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.project-details__rsvp:hover:not(:disabled) {
+  background: #fff;
+}
+
+.project-details__rsvp:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.project-details__rsvp:disabled {
+  cursor: default;
+  opacity: 0.78;
+}
+
+.project-details__status {
+  font-size: 14px;
 }
 
 .home--project-selected .box {

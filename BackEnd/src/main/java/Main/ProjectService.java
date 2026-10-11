@@ -27,4 +27,14 @@ public class ProjectService {
     public synchronized Optional<ProjectBoard> findById(UUID id) {
         return Optional.ofNullable(projects.get(id));
     }
+
+    public synchronized Optional<ProjectBoard> rsvp(UUID id) {
+        ProjectBoard project = projects.get(id);
+        if (project == null) {
+            return Optional.empty();
+        }
+
+        project.RSVP();
+        return Optional.of(project);
+    }
 }

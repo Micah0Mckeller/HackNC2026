@@ -9,6 +9,9 @@ function App() {
   const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const [rsvpedProjectIds, setRsvpedProjectIds] = useState(() => new Set())
+  const [isRSVPing, setIsRSVPing] = useState(false)
+  const [rsvpStatus, setRsvpStatus] = useState('')
   const [form, setForm] = useState({
     projectName: '',
     description: '',
@@ -41,6 +44,40 @@ function App() {
     setForm((previous) => ({ ...previous, [name]: value }))
   }
 
+  const handleRSVP = async () => {
+    if (!selectedProject || rsvpedProjectIds.has(selectedProject.projectUUID)) {
+      return
+    }
+
+    setIsRSVPing(true)
+    setRsvpStatus('')
+
+    try {
+      const response = await fetch(
+        `${PROJECTS_API_URL}/${selectedProject.projectUUID}/rsvp`,
+        { method: 'POST' },
+      )
+
+      if (!response.ok) {
+        throw new Error(`RSVP failed with status ${response.status}`)
+      }
+
+      const updatedProject = await response.json()
+      setProjects((previous) =>
+        previous.map((project) =>
+          project.projectUUID === updatedProject.projectUUID ? updatedProject : project,
+        ),
+      )
+      setSelectedProject(updatedProject)
+      setRsvpedProjectIds((previous) => new Set(previous).add(updatedProject.projectUUID))
+    } catch (error) {
+      console.error(error)
+      setRsvpStatus('Could not RSVP. Please try again.')
+    } finally {
+      setIsRSVPing(false)
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setIsSubmitting(true)
@@ -58,7 +95,7 @@ function App() {
       }
 
       const createdProject = await response.json()
-      setProjects((previous) => [...previous, createdProject].slice(0, 5))
+      setProjects((previous) => [...previous, createdProject].slice(0, 10))
       setSelectedProject(createdProject)
       setIsFormOpen(false)
       setForm({
@@ -103,7 +140,7 @@ function App() {
         }}
       >
         <section className="box" aria-labelledby="projects-title">
-          <h1 className="box__title" id="projects-title">Your Greenhouse Projects</h1>
+          <h1 className="box__title" id="projects-title">Greenhouse Projects</h1>
 
           <ul className="project-list">
             {projects.length > 0 ? (
@@ -136,9 +173,23 @@ function App() {
             <p>
               <strong>Scheduled time:</strong>{' '}
               {selectedProject.scheduledTime
-                ? new Date(selectedProject.scheduledTime).toLocaleString()
+                ? new Date(selectedProject.scheduledTime).toLocaleString([], { hour: '2-digit', minute: '2-digit', hour12: false })
                 : 'Not set'}
             </p>
+            <p><strong>RSVPs:</strong> {selectedProject.RSVPs ?? 0}</p>
+            <button
+              className="project-details__rsvp"
+              type="button"
+              onClick={handleRSVP}
+              disabled={isRSVPing || rsvpedProjectIds.has(selectedProject.projectUUID)}
+            >
+              {isRSVPing
+                ? 'RSVPing…'
+                : rsvpedProjectIds.has(selectedProject.projectUUID)
+                  ? "You're RSVP'd"
+                  : 'RSVP'}
+            </button>
+            {rsvpStatus && <p className="project-details__status" role="status">{rsvpStatus}</p>}
           </aside>
         )}
       </main>
@@ -217,12 +268,6 @@ function App() {
           </aside>
         </div>
       )}
-
-      <footer
-        className="footer"
-        style={{ backgroundImage: `url(${footer})` }}
-        aria-label="Greenhouse footer illustration"
-      />
     </>
   )
 }
