@@ -2,6 +2,12 @@
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
+  --gloss: linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0.24),
+        rgba(255, 255, 255, 0.08) 48%,
+        rgba(255, 255, 255, 0.2)
+    );
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
@@ -34,7 +40,7 @@
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
-    --bg: #16171d;
+    --bg: #4d97d0;
     --border: #2e303a;
     --code-bg: #1f2028;
     --accent: #c084fc;
