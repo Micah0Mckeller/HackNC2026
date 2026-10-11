@@ -3,28 +3,28 @@ package Main;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ProjectService {
-    private final Map<UUID, ProjectBoard> projects = new ConcurrentHashMap<>();
+    private final Map<UUID, ProjectBoard> projects = new LinkedHashMap<>();
 
-    public ProjectBoard create(ProjectRequest request) {
+    public synchronized ProjectBoard create(ProjectRequest request) {
         ProjectBoard project = new ProjectBoard(
             request.getProjectName(),
-            request.getTimeTillCompletion(),
-            request.getDescription()
+            request.getDescription(),
+            request.getLocation(),
+            request.getScheduledTime()
         );
 
         projects.put(project.getProjectUUID(), project);
         return project;
     }
 
-    public Collection<ProjectBoard> findAll() {
-        return projects.values();
+    public synchronized List<ProjectBoard> findAll() {
+        return List.copyOf(projects.values());
     }
 
-    public Optional<ProjectBoard> findById(UUID id) {
+    public synchronized Optional<ProjectBoard> findById(UUID id) {
         return Optional.ofNullable(projects.get(id));
     }
 }

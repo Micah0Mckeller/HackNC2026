@@ -2,30 +2,25 @@ package Main;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class logic {
+    private final ProjectService projectService;
 
-    private ProjectBoard currentProjectBoard = new ProjectBoard(
-        "Test Project",
-        0.0,
-        "This is a test project"
-    );
-
-    @GetMapping("/project")
-    public ProjectBoard getProject() {
-        return currentProjectBoard;
+    public logic(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
-    @PostMapping("/project")
-    public ProjectBoard createProject(@RequestBody ProjectRequest request) {
-        currentProjectBoard = new ProjectBoard(
-            request.getProjectName(),
-            request.getTimeTillCompletion(),
-            request.getDescription()
-        );
+    @GetMapping("/projects")
+    public List<ProjectBoard> getProjects() {
+        return projectService.findAll().stream().limit(10).toList();
+    }
 
-        return currentProjectBoard;
+    @PostMapping("/projects")
+    public ProjectBoard createProject(@RequestBody ProjectRequest request) {
+        return projectService.create(request);
     }
 }
